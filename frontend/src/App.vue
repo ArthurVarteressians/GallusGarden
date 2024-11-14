@@ -1,9 +1,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Gallery from "./components/Gallery.vue";
-
+import CustomGallery from "./components/CustomGallery.vue";
 export default defineComponent({
   components: {
+    CustomGallery,
     Gallery,
   },
 });
@@ -11,6 +12,6 @@ export default defineComponent({
 
 <template>
   <div>
-    <Gallery />
+    <CustomGallery />
   </div>
 </template>

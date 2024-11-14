@@ -8,9 +8,18 @@
     <!-- Main Gallery Section with Column-based Masonry Layout -->
     <main ref="gallery" class="w-[80vw] h-[80vh] overflow-y-auto p-4" @scroll="handleScroll">
       <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
-        <!-- Dynamically render images from JSON data -->
-        <div v-for="image in images" :key="image.publicId" class="mb-4 break-inside-avoid">
-          <img class="w-full h-auto rounded-lg object-cover" :src="image.url" :alt="image.description" />
+        <!-- Dynamically render images with orientation check -->
+        <div 
+          v-for="image in images" 
+          :key="image.publicId" 
+          class="mb-4 break-inside-avoid"
+          :class="getImageClass(image)"
+        >
+          <img 
+            :src="image.url" 
+            :alt="image.description" 
+            class="w-full h-auto rounded-lg object-cover" 
+          />
         </div>
       </div>
       <!-- Loading Indicator -->
@@ -30,7 +39,6 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import axios from 'axios';
 
-// Define the structure of image data
 interface ImageData {
   publicId: string;
   url: string;
@@ -42,16 +50,15 @@ export default defineComponent({
   setup() {
     const images = ref<ImageData[]>([]);
     const loading = ref(false);
-    const page = ref(1); // Track page for fetching new data
+    const page = ref(1);
 
     // Function to load images from the backend API
     const loadImages = async () => {
       loading.value = true;
       try {
-        // Fetch the data from the backend API with pagination
         const response = await axios.get(`http://localhost:5001/api/images?page=${page.value}`);
-        images.value = [...images.value, ...response.data]; // Append new data to existing images
-        page.value++; // Increment page for the next load
+        images.value = [...images.value, ...response.data];
+        page.value++;
       } catch (error) {
         console.error('Error loading images:', error);
       } finally {
@@ -64,34 +71,60 @@ export default defineComponent({
       const gallery = document.querySelector("main");
       if (gallery && gallery.scrollTop + gallery.clientHeight >= gallery.scrollHeight - 10) {
         if (!loading.value) {
-          loadImages(); // Load more images if not currently loading
+          loadImages();
         }
       }
     };
 
+    // Function to determine image orientation class
+    const getImageClass = (image: ImageData) => {
+      // Create a new image element to check dimensions
+      const img = new Image();
+      img.src = image.url;
+      if (img.width > img.height) {
+        return 'horizontal-image'; // Custom class for horizontal images
+      } else {
+        return 'vertical-image'; // Custom class for vertical images
+      }
+    };
+
     onMounted(() => {
-      loadImages(); // Initial load
+      loadImages();
     });
 
     return {
       images,
       loading,
       handleScroll,
+      getImageClass,
     };
   },
 });
 </script>
 
 <style scoped>
+/* Styles for image orientations */
+.horizontal-image img {
+  width: 100%; /* Full width for horizontal images */
+  height: auto;
+  aspect-ratio: 16 / 9; /* Aspect ratio to maintain width and height for horizontal images */
+}
+
+.vertical-image img {
+  width: 100%; /* Full width for vertical images */
+  height: auto;
+  aspect-ratio: 9 / 16; /* Aspect ratio for vertical images */
+}
+
 /* Custom style for column-based masonry layout */
 .break-inside-avoid {
-  break-inside: avoid; /* Prevents images from breaking between columns */
+  break-inside: avoid;
 }
 
 .columns-1 > div,
 .columns-2 > div,
 .columns-3 > div,
 .columns-4 > div {
-  margin-bottom: 1rem; /* Space between images */
+  margin-bottom: 1rem;
 }
 </style>
