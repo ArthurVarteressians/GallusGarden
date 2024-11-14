@@ -17,8 +17,7 @@
     "categories": [
       "travel",
       "photography"
-    ]
-  },
+    ]  },
   {
     "name": "image2.jpg",
     "description": "A serene beach view at sunset",
@@ -97,7 +96,8 @@
     "categories": [
       "gardening",
       "photography"
-    ]
+    ],
+    "orientation": "horizontal"
   },
   {
     "name": "image6.jpg",
@@ -140,6 +140,26 @@
     ]
   },
   {
+    "name": "image4.jpg",
+    "description": "A misty forest with tall trees",
+    "tags": [
+      "forest",
+      "mist",
+      "trees"
+    ],
+    "url": "https://pagedone.io/asset/uploads/1688031375.jpg",
+    "publicId": "GG_4",
+    "format": "jpeg",
+    "views": 175,
+    "likes": 40,
+    "isFeatured": true,
+    "isPublic": true,
+    "categories": [
+      "nature",
+      "photography"
+    ]
+  },
+  {
     "name": "image8.jpg",
     "description": "A picturesque mountain range",
     "tags": [
@@ -157,7 +177,8 @@
     "categories": [
       "travel",
       "nature"
-    ]
+    ],
+    "orientation": "horizontal"
   },
   {
     "name": "image9.jpg",
@@ -200,19 +221,38 @@
     ]
   },
   {
-    "name": "image11.jpg",
-    "description": "A colorful sunset over the ocean",
+    "name": "image1.jpg",
+    "description": "A beautiful landscape photo",
     "tags": [
-      "sunset",
-      "ocean",
-      "sky"
+      "landscape",
+      "nature",
+      "mountains"
     ],
-    "url": "https://picsum.photos/id/1043/200/300",
-    "publicId": "GG_11",
+    "url": "https://images.all-free-download.com/images/graphiclarge/beach_cloud_dawn_horizon_horizontal_landscape_ocean_601821.jpg",
+    "publicId": "GG_1",
     "format": "jpeg",
-    "views": 290,
-    "likes": 75,
+    "views": 100,
+    "likes": 20,
     "isFeatured": true,
+    "isPublic": true,
+    "categories": [
+      "travel",
+      "photography"
+    ]  },
+  {
+    "name": "image2.jpg",
+    "description": "A serene beach view at sunset",
+    "tags": [
+      "beach",
+      "sunset",
+      "waves"
+    ],
+    "url": "https://pagedone.io/asset/uploads/1688031232.jpg",
+    "publicId": "GG_2",
+    "format": "jpeg",
+    "views": 150,
+    "likes": 30,
+    "isFeatured": false,
     "isPublic": true,
     "categories": [
       "travel",
@@ -220,59 +260,39 @@
     ]
   },
   {
-    "name": "image12.jpg",
-    "description": "A bridge leading into the mist",
+    "name": "image3.jpg",
+    "description": "A city skyline with skyscrapers",
     "tags": [
-      "bridge",
-      "mist",
-      "river"
-    ],
-    "url": "https://images.all-free-download.com/images/graphiclarge/beach_cloud_dawn_horizon_horizontal_landscape_ocean_601821.jpg",
-    "publicId": "GG_12",
-    "format": "jpeg",
-    "views": 160,
-    "likes": 38,
-    "isFeatured": false,
-    "isPublic": true,
-    "categories": [
-      "travel",
-      "architecture"
-    ]
-  },
-  {
-    "name": "image13.jpg",
-    "description": "A snowy mountain peak",
-    "tags": [
-      "snow",
-      "mountain",
-      "sky"
+      "city",
+      "skyline",
+      "urban"
     ],
     "url": "https://pagedone.io/asset/uploads/1688031357.jpg",
-    "publicId": "GG_13",
+    "publicId": "GG_3",
     "format": "jpeg",
-    "views": 260,
-    "likes": 70,
+    "views": 200,
+    "likes": 50,
     "isFeatured": true,
     "isPublic": true,
     "categories": [
-      "nature",
-      "adventure"
+      "architecture",
+      "urban"
     ]
   },
   {
-    "name": "image14.jpg",
-    "description": "A peaceful lake in the woods",
+    "name": "image4.jpg",
+    "description": "A misty forest with tall trees",
     "tags": [
-      "lake",
-      "woods",
-      "reflection"
+      "forest",
+      "mist",
+      "trees"
     ],
-    "url": "https://pagedone.io/asset/uploads/1688031232.jpg",
-    "publicId": "GG_14",
+    "url": "https://pagedone.io/asset/uploads/1688031375.jpg",
+    "publicId": "GG_4",
     "format": "jpeg",
-    "views": 190,
-    "likes": 42,
-    "isFeatured": false,
+    "views": 175,
+    "likes": 40,
+    "isFeatured": true,
     "isPublic": true,
     "categories": [
       "nature",
@@ -297,7 +317,8 @@
     "categories": [
       "travel",
       "nature"
-    ]
+    ],
+    "orientation": "horizontal"
   },
   {
     "name": "image16.jpg",
