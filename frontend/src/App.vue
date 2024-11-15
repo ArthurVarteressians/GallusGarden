@@ -3,11 +3,13 @@ import { defineComponent } from "vue";
 import Gallery from "./components/Gallery.vue";
 import CustomGallery from "./components/CustomGallery.vue";
 import AwesomeGallery from "./components/AwesomeGallery.vue";
-AwesomeGallery
+import NewGallery from "./components/NewGallery.vue";
+
 export default defineComponent({
   components: {
     CustomGallery,
     AwesomeGallery,
+    NewGallery,
     Gallery,
   },
 });
@@ -15,6 +17,6 @@ export default defineComponent({
 
 <template>
   <div>
-    <AwesomeGallery />
+    <NewGallery />
   </div>
 </template>
