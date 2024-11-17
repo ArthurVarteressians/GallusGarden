@@ -62,8 +62,8 @@
     "likes": 35,
     "isFeatured": false,
     "isPublic": true,
-    "categories": ["gardening", "photography"],
-    "orientation": "horizontal"
+    "categories": ["gardening", "photography"],    "orientation":"horizontal"
+
   },
   {
     "name": "image6.jpg",
@@ -76,9 +76,7 @@
     "likes": 60,
     "isFeatured": true,
     "isPublic": true,
-    "categories": ["nature", "travel"]
-  
-
+    "categories": ["nature", "travel"], "orientation":"vertical"
   },
   {
     "name": "image7.jpg",
@@ -117,8 +115,7 @@
     "likes": 80,
     "isFeatured": true,
     "isPublic": true,
-    "categories": ["travel", "nature"],
-    "orientation": "horizontal"
+    "categories": ["travel", "nature"]
   },
   {
     "name": "image9.jpg",
@@ -144,7 +141,7 @@
     "likes": 27,
     "isFeatured": false,
     "isPublic": true,
-    "categories": ["nature", "photography"] ,   "orientation": "horizontal"
+    "categories": ["nature", "photography"]
   },
   {
     "name": "image1.jpg",
@@ -158,7 +155,6 @@
     "isFeatured": true,
     "isPublic": true,
     "categories": ["travel", "photography"]
-        ,"orientation": "horizontal"
   },
   {
     "name": "image2.jpg",
@@ -171,7 +167,7 @@
     "likes": 30,
     "isFeatured": false,
     "isPublic": true,
-    "categories": ["travel", "nature"],    "orientation": "horizontal"
+    "categories": ["travel", "nature"]
   },
   {
     "name": "image3.jpg",
@@ -210,8 +206,7 @@
     "likes": 55,
     "isFeatured": true,
     "isPublic": true,
-    "categories": ["travel", "nature"],
-    "orientation": "horizontal"
+    "categories": ["travel", "nature"]
   },
   {
     "name": "image16.jpg",
@@ -238,6 +233,45 @@
     "isFeatured": false,
     "isPublic": true,
     "categories": ["nature", "gardening"]
+  },
+  {
+    "name": "image18.jpg",
+    "description": "A rocky coastline with crashing waves",
+    "tags": ["coast", "waves", "rocks"],
+    "url": "https://pagedone.io/asset/uploads/1688031357.jpg",
+    "publicId": "GG_18",
+    "format": "jpeg",
+    "views": 220,
+    "likes": 58,
+    "isFeatured": true,
+    "isPublic": true,
+    "categories": ["nature", "adventure"]
+  },
+  {
+    "name": "image18.jpg",
+    "description": "A rocky coastline with crashing waves",
+    "tags": ["coast", "waves", "rocks"],
+    "url": "https://pagedone.io/asset/uploads/1688031357.jpg",
+    "publicId": "GG_18",
+    "format": "jpeg",
+    "views": 220,
+    "likes": 58,
+    "isFeatured": true,
+    "isPublic": true,
+    "categories": ["nature", "adventure"]
+  },
+  {
+    "name": "image18.jpg",
+    "description": "A rocky coastline with crashing waves",
+    "tags": ["coast", "waves", "rocks"],
+    "url": "https://pagedone.io/asset/uploads/1688031357.jpg",
+    "publicId": "GG_18",
+    "format": "jpeg",
+    "views": 220,
+    "likes": 58,
+    "isFeatured": true,
+    "isPublic": true,
+    "categories": ["nature", "adventure"]
   },
   {
     "name": "image18.jpg",

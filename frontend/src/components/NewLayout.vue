@@ -1,7 +1,7 @@
 <template>
      <div>
        <Masonry :images="images" />
-       <div ref="loadMoreTrigger" class="loading-indicator" v-if="loading">
+       <div ref="loadMoreTrigger" v-if="loading" class="loading-indicator">
          Loading more images...
        </div>
      </div>
@@ -47,7 +47,7 @@
        );
    
        onMounted(() => {
-         loadImages(); // Initial load
+         loadImages();
          if (loadMoreTrigger.value) {
            observer.observe(loadMoreTrigger.value);
          }
@@ -63,7 +63,6 @@
      margin: 0;
      font-family: Arial, sans-serif;
    }
-   
    .loading-indicator {
      text-align: center;
      padding: 20px;
