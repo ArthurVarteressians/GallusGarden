@@ -8,7 +8,7 @@
     </header>
 
     <!-- Main Gallery Section with Custom Layout -->
-    <main class="w-[80vw] h-[80vh] overflow-y-auto p-4">
+    <main class="w-[80vw] h-[80vh] overflow-y-auto p-4" ref="galleryContainer">
       <div class="space-y-4">
         <!-- Dynamically generate rows with different layouts based on index -->
         <div
@@ -24,13 +24,16 @@
             <img
               :src="image.url"
               :alt="image.description"
-              class="w-[100vw] h-[20vh] rounded-lg object-container"
+              class="w-full h-[20vh] rounded-lg object-cover"
             />
           </div>
         </div>
       </div>
       <!-- Loading Indicator -->
       <div v-if="loading" class="text-center py-4">Loading...</div>
+      <div v-if="allDataLoaded" class="text-center py-4 text-gray-500">
+        No more images to load
+      </div>
     </main>
 
     <!-- Footer Section -->
@@ -46,7 +49,6 @@
 import { defineComponent, ref, onMounted } from "vue";
 import axios from "axios";
 
-// Define the structure of image data
 interface ImageData {
   publicId: string;
   url: string;
@@ -59,16 +61,24 @@ export default defineComponent({
     const images = ref<ImageData[]>([]);
     const loading = ref(false);
     const page = ref(1);
+    const allDataLoaded = ref(false);
+    const galleryContainer = ref(null);
 
-    // Function to load images from the backend API
     const loadImages = async () => {
+      if (loading.value || allDataLoaded.value) return;
+
       loading.value = true;
       try {
         const response = await axios.get(
           `http://localhost:5001/api/images?page=${page.value}`
         );
-        images.value = [...images.value, ...response.data];
-        page.value++;
+        if (response.data.images && response.data.images.length > 0) {
+          images.value = [...images.value, ...response.data.images];
+          page.value++;
+          allDataLoaded.value = !response.data.hasMore;
+        } else {
+          allDataLoaded.value = true;
+        }
       } catch (error) {
         console.error("Error loading images:", error);
       } finally {
@@ -76,56 +86,81 @@ export default defineComponent({
       }
     };
 
-    // Helper function to split images into rows of 4 or 3 based on layout needs
     const generateRows = () => {
       const rows = [];
       let i = 0;
       while (i < images.value.length) {
-        if ((rows.length + 1) % 2 !== 0) {
-          rows.push(images.value.slice(i, i + 4)); // Odd rows: 4 images
-          i += 4;
-        } else {
-          rows.push(images.value.slice(i, i + 3)); // Even rows: 3 images
+        if ((rows.length + 1) % 4 === 0) {
+          rows.push(images.value.slice(i, i + 3)); // Rows divisible by 4: 3 images
           i += 3;
+        } else {
+          rows.push(images.value.slice(i, i + 4)); // Other rows: 4 images
+          i += 4;
         }
       }
       return rows;
     };
 
-    // Function to get the CSS class for each row based on the row index
     const getRowClass = (index: number) => {
-      return index % 2 === 0
-        ? "grid grid-cols-4 gap-4"
-        : "grid grid-cols-4 gap-4"; // Both rows use a grid layout
+      return index % 4 === 3 ? "grid grid-cols-3 gap-4" : "grid grid-cols-4 gap-4";
     };
 
-    // Function to get the CSS class for images within the row
     const getImageClass = (rowIndex: number, colIndex: number) => {
-      // Odd rows (4 images, each 25%)
-      if (rowIndex % 2 === 0) {
-        return "col-span-1"; // All images in odd rows take 1 column (25%)
+      if (rowIndex % 4 === 3) {
+        // Special layout for rows divisible by 4
+        return colIndex === 0 ? "col-span-2" : "col-span-1";
       }
-      // Even rows (1 image 50%, 2 images 25%)
-      if (colIndex === 0) {
-        return "col-span-2"; // First image in even rows takes 2 columns (50%)
-      } else {
-        return "col-span-1"; // Remaining images in even rows take 1 column (25%)
+      return "col-span-1"; // Regular rows
+    };
+
+    const handleScroll = () => {
+      if (!galleryContainer.value) return;
+
+      const container = galleryContainer.value as HTMLElement;
+      if (
+        container.scrollTop + container.clientHeight >= container.scrollHeight - 10 &&
+        !loading.value &&
+        !allDataLoaded.value
+      ) {
+        loadImages();
       }
     };
 
     onMounted(() => {
-      loadImages(); // Initial load
+      loadImages();
+      galleryContainer.value?.addEventListener("scroll", handleScroll);
     });
 
     return {
       images,
       loading,
+      allDataLoaded,
       generateRows,
       getRowClass,
       getImageClass,
+      galleryContainer,
     };
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Custom Styling */
+main {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+main::-webkit-scrollbar {
+  width: 8px;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>

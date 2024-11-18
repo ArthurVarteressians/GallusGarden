@@ -6,8 +6,12 @@
     </header>
 
     <!-- Main Gallery Section -->
-    <main class="w-[90vw] lg:w-[80vw] h-[80vh] overflow-y-auto m-4 p-4" @scroll="handleScroll">
+    <main
+      class="w-[90vw] lg:w-[80vw] h-[80vh] overflow-y-auto m-4 p-4"
+      ref="galleryContainer"
+    >
       <div class="grid grid-cols-4 gap-4 auto-rows-[150px] md:auto-rows-[200px] lg:auto-rows-[250px]">
+        <!-- Render images dynamically -->
         <div
           v-for="image in images"
           :key="image.publicId"
@@ -20,8 +24,12 @@
           />
         </div>
       </div>
+
+      <!-- Loading and End Indicators -->
       <div v-if="loading" class="text-center py-4">Loading...</div>
-      <div v-if="allDataLoaded" class="text-center py-4 text-gray-500">No more images to load</div>
+      <div v-if="allDataLoaded" class="text-center py-4 text-gray-500">
+        No more images to load
+      </div>
     </main>
 
     <!-- Footer Section -->
@@ -49,20 +57,21 @@ export default defineComponent({
     const loading = ref(false);
     const allDataLoaded = ref(false);
     const page = ref(1);
+    const galleryContainer = ref<HTMLElement | null>(null);
 
+    // Function to load images from the API
     const loadImages = async () => {
       if (loading.value || allDataLoaded.value) return;
 
       loading.value = true;
       try {
-        const response = await axios.get(
-          `http://localhost:5001/api/images?page=${page.value}`
-        );
-        const newImages = response.data;
+        const response = await axios.get(`http://localhost:5001/api/images?page=${page.value}`);
+        const { images: newImages, hasMore } = response.data;
 
-        if (newImages.length > 0) {
+        if (newImages && newImages.length > 0) {
           images.value = [...images.value, ...newImages];
           page.value++;
+          allDataLoaded.value = !hasMore; // Set to true if no more images
         } else {
           allDataLoaded.value = true;
         }
@@ -73,20 +82,24 @@ export default defineComponent({
       }
     };
 
+    // Assign CSS classes dynamically based on image orientation
     const getImageSizeClass = (image: ImageData) => {
       if (image.orientation === "horizontal") {
-        return "col-span-2 row-span-1";
+        return "col-span-2 row-span-1"; // Wide images
       } else if (image.orientation === "vertical") {
-        return "col-span-1 row-span-2";
+        return "col-span-1 row-span-2"; // Tall images
       } else {
-        return "col-span-1 row-span-1";
+        return "col-span-1 row-span-1"; // Square images
       }
     };
 
-    const handleScroll = (event: Event) => {
-      const target = event.target as HTMLElement;
+    // Infinite Scroll Handler
+    const handleScroll = () => {
+      if (!galleryContainer.value) return;
+
+      const container = galleryContainer.value;
       if (
-        target.scrollTop + target.clientHeight >= target.scrollHeight - 10 &&
+        container.scrollTop + container.clientHeight >= container.scrollHeight - 10 &&
         !loading.value &&
         !allDataLoaded.value
       ) {
@@ -95,16 +108,40 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      loadImages();
+      loadImages(); // Load initial images
+      if (galleryContainer.value) {
+        galleryContainer.value.addEventListener("scroll", handleScroll);
+      }
     });
 
     return {
       images,
       loading,
       allDataLoaded,
-      handleScroll,
+      galleryContainer,
       getImageSizeClass,
     };
   },
 });
 </script>
+
+<style scoped>
+/* Custom Scrollbar Styling */
+main {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+main::-webkit-scrollbar {
+  width: 8px;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>

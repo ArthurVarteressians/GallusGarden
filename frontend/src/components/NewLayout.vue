@@ -1,4 +1,9 @@
 <template>
+      <header
+      class="w-full h-[10vh] bg-gray-800 text-white flex items-center justify-center"
+    >
+      <h1 class="text-xl font-bold">Gallery Header</h1>
+    </header>
   <section>
     <div class="mainDiv">
       <Masonry :images="images" />
@@ -14,6 +19,12 @@
       </div>
     </div>
   </section>
+      <!-- Footer Section -->
+      <footer
+      class="w-full h-[10vh] bg-gray-800 text-white flex items-center justify-center"
+    >
+      <p class="text-sm">Gallery Footer</p>
+    </footer>
 </template>
 
 <script>
@@ -55,7 +66,11 @@ export default {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !loading.value && !allDataLoaded.value) {
+        if (
+          entries[0].isIntersecting &&
+          !loading.value &&
+          !allDataLoaded.value
+        ) {
           loadImages();
         }
       },
@@ -76,13 +91,13 @@ export default {
 
 <style scoped>
 section {
-  margin-top: 20px;
+margin: 40px auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .mainDiv {
-  width: 80%;
+  width: 70%;
 }
 
 .loading-indicator {

@@ -1,4 +1,5 @@
   <template>
+    
     <div class="masonry">
       <div
         v-for="(item, index) in images"
@@ -38,17 +39,17 @@
   <style scoped>
   .masonry {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Larger grid items */
-    grid-auto-rows: 100px; /* Base height for rows */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-auto-rows: 100px;
     gap: 15px;
     padding: 10px;
-    grid-auto-flow: dense; /* Fill gaps dynamically */
+    grid-auto-flow: dense;
   }
 
   .masonry-item {
     overflow: hidden;
     border-radius: 12px;
-    background-color: #f0f0f0; /* Fallback for empty space */
+    background-color: #f0f0f0;
   }
 
   .masonry-image {
