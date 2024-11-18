@@ -1,12 +1,11 @@
 <template>
-  <section>
-    <div class="mainDiv">
-      <Masonry :images="images" />
-      <div ref="loadMoreTrigger" v-if="loading" class="loading-indicator">
-        Loading more images...
-      </div>
+  <section> 
+  <div class="mainDiv">
+    <Masonry :images="images" />
+    <div ref="loadMoreTrigger" class="loading-indicator">
+      Loading more images...
     </div>
-  </section>
+  </div></section>
 </template>
 
 <script>
@@ -17,22 +16,23 @@ import Masonry from "./Masonry.vue";
 export default {
   components: { Masonry },
   setup() {
-    const images = ref([]); // Array to hold images
-    const loading = ref(false);
-    const page = ref(1);
-    const loadMoreTrigger = ref(null);
+    const images = ref([]); // Store loaded images
+    const loading = ref(false); // Loading state
+    const page = ref(1); // Page number for API requests
+    const loadMoreTrigger = ref(null); // Reference to the load more trigger element
 
+    // Fetch images from the backend
     const loadImages = async () => {
       if (loading.value) return; // Prevent duplicate requests
-
       loading.value = true;
+
       try {
         const response = await axios.get(
           `http://localhost:5001/api/images?page=${page.value}`
         );
         if (Array.isArray(response.data)) {
           images.value = [...images.value, ...response.data];
-          page.value++; // Increment page for next fetch
+          page.value++;
         } else {
           console.error("Unexpected response structure:", response.data);
         }
@@ -43,6 +43,7 @@ export default {
       }
     };
 
+    // Infinite scroll observer
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !loading.value) {
@@ -52,14 +53,15 @@ export default {
       { threshold: 1.0 }
     );
 
+    // Initial setup
     onMounted(() => {
-      loadImages();
+      loadImages(); // Load initial images
       if (loadMoreTrigger.value) {
-        observer.observe(loadMoreTrigger.value);
+        observer.observe(loadMoreTrigger.value); // Observe the load more trigger
       }
     });
 
-    return { images, loading, loadMoreTrigger };
+    return { images, loadMoreTrigger };
   },
 };
 </script>
@@ -71,8 +73,7 @@ section {
   justify-content: center;
   align-items: center;
 }
-
-.mainDiv {
+.mainDiv{
   width: 80%;
 }
 
@@ -80,5 +81,6 @@ section {
   text-align: center;
   padding: 20px;
   font-size: 18px;
+  color: #666;
 }
 </style>
