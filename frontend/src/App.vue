@@ -18,6 +18,6 @@ export default defineComponent({
 
 <template>
   <div>
-    <AwesomeGallery />        
+    <NewLayout />        
   </div>
 </template>
