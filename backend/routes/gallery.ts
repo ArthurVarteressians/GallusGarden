@@ -20,7 +20,7 @@ fs.readFile(imagesFilePath, 'utf-8', (err, data) => {
 // Route to get paginated images
 router.get('/', (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
-  const imagesPerPage = 8; // Can change image count here
+  const imagesPerPage = 14; // Can change image count here
 
   // Calculate the start and end indices for pagination
   const startIndex = (page - 1) * imagesPerPage;
