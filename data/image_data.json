@@ -80,7 +80,7 @@
     "isFeatured": true,
     "isPublic": true,
     "categories": ["nature", "travel"],
-    "orientation": "horizontal"
+    "orientation": "vertical"
   },
   {
     "name": "image7.jpg",
